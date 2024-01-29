@@ -24,6 +24,8 @@ $ npm install
 $ npm run build
 ```
 
+If you have no Redis server running, please install it first or use docker: `docker run --name some-redis -p 6379:6379 -d redis`
+
 ```bash
 # create python virtualenv
 $ pip install requirements.txt
