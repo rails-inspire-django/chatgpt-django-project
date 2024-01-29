@@ -1,0 +1,11 @@
+django==5.0.1
+python-webpack-boilerplate==1.0.1
+django-turbo-helper==2.1.3
+django-actioncable==1.0.4
+openai==0.28.1
+redis==4.6.0
+channels==4.0.0
+daphne==4.0.0
+channels-redis==4.1.0
+celery==5.3.6
+watchfiles==0.21.0

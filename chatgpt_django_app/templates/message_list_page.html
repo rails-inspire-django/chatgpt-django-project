@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% load turbo_helper %}
+
+{% block content %}
+
+  <main class="w-full">
+    <div class="grid grid-cols-12 gap-2">
+      <div class="col-span-12 bg-gray-50 sm:col-span-3">
+        <div class="flex flex-col space-y-1 sm:h-screen">
+
+          <form method="post" action="{% url 'chat:index' %}">
+            {% csrf_token %}
+            <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded m-2">Start a new conversation</button>
+          </form>
+
+          <ul class="flex flex-col py-4 space-y-2">
+            {% for chat in chats %}
+              <a class="text-white py-2 px-2 rounded mx-2 bg-blue-500"
+                 href="{% url 'chat:message-list' chat.pk %}">Chat: created on <time>{{ chat.created_at }}</time></a>
+            {% endfor %}
+          </ul>
+
+        </div>
+      </div>
+      <div class="col-span-12 bg-gray-50 sm:col-span-9">
+        <div class="bg-gray-50 sm:h-screen">
+
+          <div class="flex flex-col h-full">
+
+            <!-- Subscribe to the chat group, so we can send Turbo stream via Websocket -->
+            <!-- https://django-turbo-helper.readthedocs.io/en/latest/real-time-updates.html -->
+            {% turbo_stream_from 'chat' view.kwargs.chat_pk %}
+
+            <div class="overflow-y-auto flex-1" id="{% dom_id view.kwargs.chat_pk "message_list_container" %}">
+              {% include 'message_list.html' with chat_pk=view.kwargs.chat_pk %}
+            </div>
+
+            <div class="p-2">
+              {% url 'chat:message-create' view.kwargs.chat_pk as src %}
+              {% turbo_frame "message_create" src=src data_turbo="true" %}
+                Loading...
+              {% endturbo_frame %}
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+{% endblock %}

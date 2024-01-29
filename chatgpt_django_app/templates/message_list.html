@@ -1,0 +1,6 @@
+{% load turbo_helper %}
+<div id="{% dom_id chat_pk "message_list" %}">
+  {% for instance in object_list %}
+    {% include "message_item.html" with instance=instance %}
+  {% endfor %}
+</div>

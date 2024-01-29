@@ -1,0 +1,32 @@
+{% load turbo_helper %}
+
+{% turbo_frame "message_create" data_turbo="true" %}
+
+  <form
+    method="post"
+    action="{% url 'chat:message-create' view.kwargs.chat_pk %}"
+    class="p-2 m-2"
+    data-controller="chatgpt-message-form"
+    data-action="keydown.ctrl+enter->chatgpt-message-form#autoSubmit focusin->chatgpt-message-form#scroll"
+    data-chatgpt-message-form-target-value="{% dom_id view.kwargs.chat_pk "message_list_container" %}"
+  >
+    {% csrf_token %}
+
+    <div class="mb-3">
+      {{ form.content }}
+
+      <div class="text-xs italic text-red-500">
+        {{ form.content.errors }}
+      </div>
+    </div>
+
+    <button type="submit"
+            class="transition-all bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded disabled:bg-gray-400 disabled:text-gray-500 disabled:cursor-not-allowed"
+            data-turbo-submits-with="Submitting..."
+    >
+      Submit
+    </button>
+
+  </form>
+
+{% endturbo_frame %}

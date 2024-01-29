@@ -1,0 +1,21 @@
+{% load turbo_helper %}
+
+<div id="message_{{ instance.pk }}">
+  {% if instance.role_label == 'User' %}
+    <div class="p-4 m-4 max-w-full text-black rounded-lg bg-sky-100 prose"
+         data-controller="message"
+         data-content="{{ instance.content|escape }}"
+         data-message-target-value="{% dom_id instance.chat_id "message_list" %}"
+         data-turbo-stream="{{ request|yesno:"false,true" }}"
+    >
+    </div>
+  {% else %}
+    <div class="p-4 m-4 max-w-full bg-gray-200 rounded-lg prose"
+         data-controller="message"
+         data-content="{{ instance.content|escape }}"
+         data-message-target-value="{% dom_id instance.chat_id "message_list" %}"
+         data-turbo-stream="{{ request|yesno:"false,true" }}"
+    >
+    </div>
+  {% endif %}
+</div>
