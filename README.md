@@ -12,7 +12,7 @@ If you want to check more details, please check the [Tutorial Series: How to cre
 5. The input box height can auto grow with the content, so user can see the whole content when typing.
 6. Press `Ctrl + Enter` to send message, without clicking the submit button
 
-![demo gif](https://raw.githubusercontent.com/rails-inspire-django/chatgpt-django-project/main/example.gif)
+![demo gif](./example.gif)
 
 ## How to use
 
